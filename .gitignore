@@ -1,0 +1,10 @@
+build
+.project
+.cproject
+hello_world
+.settings
+CMakeFiles
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+
