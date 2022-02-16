@@ -3,8 +3,9 @@
 #include <cstdlib>
 #include <string>
 //0rd-party includes
-//#include <SDL.h>
-#include <SDL2/SDL.h>
+
+#include <SDL.h>
+//#include <SDL2/SDL.h>
 
 SDL_Window* gWindow = nullptr;
 SDL_Surface* globalScreenSurface = nullptr;
@@ -17,19 +18,20 @@ static int32_t init(){
 		return EXIT_FAILURE;
 	}
 	return EXIT_SUCCESS;
-}
+
 
 //SDL_WINDOW_SHOWN
-const std::string windowName = "Hello, World";
+const std::string windowName = "Hello, World!";
 const int32_t windowX = 0;
 const int32_t windowY = 0;
 const int32_t windowWidth = 640;
 const int32_t windowHeight = 480;
-gWindow = SDL_CreateWindow(windowName.c_string(), windowX,
-		windowY , windowWidth, windowHeight, SDL_WINDOW_SHOWN);
+
+gWindow = SDL_CreateWindow(windowName.c_str(), windowX,
+		windowY, windowWidth, windowHeight,SDL_WINDOW_SHOWN);
 //title, x, y, width, height, flag
 
-
+}
 
 int32_t main ([[maybe_unused]]int32_t argc, [[maybe_unused]]char* argv[])
 {
