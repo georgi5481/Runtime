@@ -69,7 +69,7 @@ static int32_t init(){
 
 
 static void deinit(){	//deinit
-	//SDL_FreeSurface()
+	SDL_FreeSurface(globalImage);
 	if(gWindow != nullptr){	//shouldn't destroy a nullpointer
 		SDL_DestroyWindow(gWindow);
 		gWindow = nullptr;
