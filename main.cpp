@@ -14,6 +14,12 @@ SDL_Surface* globalImage = nullptr;
 static void draw()
 {
 	SDL_BlitSurface(globalImage, nullptr, globalScreenSurface, nullptr);
+	if(EXIT_SUCCESS != SDL_UpdateWindowSurface(gWindow)){
+		std::cerr << "SDL_UpdateWindowSurface failed. Reason: " << SDL_GetError() << std::endl;
+	}
+
+	SDL_Delay(5000);
+
 }
 
 static int32_t loadResources(){
@@ -37,8 +43,8 @@ static int32_t init(){
 
 	//using SDL_WINDOW_SHOWN as flag
 	const std::string windowName = "Hello, World!";
-	const int32_t windowX = 0;
-	const int32_t windowY = 0;
+	const int32_t windowX = SDL_WINDOWPOS_UNDEFINED;
+	const int32_t windowY = SDL_WINDOWPOS_UNDEFINED;
 	const int32_t windowWidth = 640;
 	const int32_t windowHeight = 480;
 	gWindow = SDL_CreateWindow(windowName.c_str(), windowX,
@@ -78,7 +84,7 @@ int32_t main ([[maybe_unused]]int32_t argc, [[maybe_unused]]char* argv[])
 		std::cerr << "init() failed" << std::endl;
 		return EXIT_FAILURE;
 	}
-
+	draw();
 
 	deinit();
 
