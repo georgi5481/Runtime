@@ -7,13 +7,22 @@ set(CMAKE_MODULE_PATH
 
 project(hello_world LANGUAGES CXX)	#first instance the project and the language
 
-find_package(SDL2 REQUIRED)	#then find the packeges
-find_package(SDL2_image REQUIRED)
-find_package(SDL2_ttf REQUIRED)
-find_package(SDL2_mixer REQUIRED)
+if(UNIX)
+	set(SDL2_image_name SDL2_image)
+	set(SDL2_ttf_name SDL2_ttf)
+	set(SDL2_mixer_name SDL2_mixer)
+elseif(WIN32 OR APPLE)
+	set(SDL2_image_name SDL2_IMAGE)
+	set(SDL2_ttf_name SDL2_TTF)
+	set(SDL2_mixer_name SDL2_MIXER)
+endif()
 
+	find_package(SDL2 REQUIRED)	#first one doesnt need to change
+	find_package(SDL2_image_name)	#using the three variables we just used and set
+	find_package(SDL2_ttf_name)
+	find_package(SDL2_mixer_name)
 
-set(_BASE_DIR ${CMAKE_CURRENT_SOURCE_DIR})
+set(_BASE_DIR ${CMAKE_CURRENT_SOURCE_DIR})	#set a variable name
 
 add_executable(${PROJECT_NAME} ${_BASE_DIR}/main.cpp)
 
