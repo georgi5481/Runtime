@@ -78,6 +78,10 @@ static void deinit(){	//deinit
 	SDL_Quit();
 }
 
+static int32_t runAplication(){
+
+}
+
 int32_t main ([[maybe_unused]]int32_t argc, [[maybe_unused]]char* argv[])
 {
 	if(EXIT_SUCCESS != init()){
