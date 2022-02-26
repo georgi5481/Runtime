@@ -22,7 +22,7 @@ static void draw()
 }
 
 static int32_t loadResources(){
-	const std::string filePath = "./resources/hello.bmp";	//get the path to the file we need
+	const std::string filePath = "../resources/hello.bmp";	//get the path to the file we need
 
 	globalImage = SDL_LoadBMP(filePath.c_str()); //load the file with the path
 
