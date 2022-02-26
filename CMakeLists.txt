@@ -5,7 +5,7 @@ include(${CMAKE_CURRENT_SOURCE_DIR}/cmake_helpers/helpers.cmake)
 set(CMAKE_MODULE_PATH 
 	${CMAKE_MODULE_PATH} ${CMAKE_MODULE_PATH}/cmake_helpers/find_modules)
 
-project(hello_world LANGUAGES CXX)	#first instance the project and the language
+project(SDL_Runtime LANGUAGES CXX)	#first instance the project and the language
 
 if(UNIX)
 	set(SDL2_image_name SDL2_image)
