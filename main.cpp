@@ -2,7 +2,7 @@
 #include <cstdint>
 #include <cstdlib>
 #include <string>
-//0rd-party includes
+//3rd-party includes
 
 #include <SDL.h>
 //#include <SDL2/SDL.h>
@@ -19,7 +19,6 @@ static void draw()
 	}
 
 	SDL_Delay(5000);
-
 }
 
 static int32_t loadResources(){
@@ -48,7 +47,7 @@ static int32_t init(){
 	const int32_t windowWidth = 640;
 	const int32_t windowHeight = 480;
 	gWindow = SDL_CreateWindow(windowName.c_str(), windowX,
-					windowY, windowWidth, windowHeight,SDL_WINDOW_SHOWN);
+					windowY, windowWidth, windowHeight, SDL_WINDOW_SHOWN);
 
 	if(nullptr==gWindow){	//check if gWindow was correctly instanced
 		std::cerr << "SDL_Init failed. Reason: " << SDL_GetError() << std::endl;
@@ -75,22 +74,40 @@ static void deinit(){	//deinit
 		gWindow = nullptr;
 	}
 
-	SDL_Quit();
+
 }
 
 static int32_t runAplication(){
+	if(EXIT_SUCCESS != init()){
+			std::cerr << "init() failed" << std::endl;
+			return EXIT_FAILURE;
+		}
+
+		draw();
+
+		deinit();
+
+		return EXIT_SUCCESS;
 
 }
 
 int32_t main ([[maybe_unused]]int32_t argc, [[maybe_unused]]char* argv[])
 {
-	if(EXIT_SUCCESS != init()){
-		std::cerr << "init() failed" << std::endl;
+	if(EXIT_SUCCESS != SDL_Init(SDL_INIT_VIDEO))
+	{
+		std::cerr << "SDL_Init failed. Reason:" << SDL_GetError() << std::endl;
 		return EXIT_FAILURE;
 	}
-	draw();
 
-	deinit();
+	if(EXIT_SUCCESS != runAplication())
+	{
+		sd::cerr << "runAplication failed. " << std::endl;
+		return EXIT_FAILURE;
+	}
+
+
+	SDL_Quit();
 
 	return EXIT_SUCCESS;
 }
+*
