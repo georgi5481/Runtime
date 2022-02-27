@@ -9,28 +9,33 @@
 
 
 
-static void draw()
+static void draw(SDL_Window* window, SDL_Surface* screenSurface,
+		SDL_Surface* image)
 {
-	SDL_BlitSurface(globalImage, nullptr, globalScreenSurface, nullptr);
-	if(EXIT_SUCCESS != SDL_UpdateWindowSurface(gWindow)){
+	SDL_BlitSurface(image, nullptr, screenSurface, nullptr);
+	if(EXIT_SUCCESS != SDL_UpdateWindowSurface(window)){
 		std::cerr << "SDL_UpdateWindowSurface failed. Reason: " << SDL_GetError() << std::endl;
 	}
 
 	SDL_Delay(5000);
 }
 
+
+
 static int32_t loadResources(SDL_Surface*& outImage){
 	const std::string filePath = "../resources/hello.bmp";	//get the path to the file we need
 
-	globalImage = SDL_LoadBMP(filePath.c_str()); //load the file with the path
+	outImage = SDL_LoadBMP(filePath.c_str()); //load the file with the path
 
-	if(globalImage == nullptr){	//check if loading the file went well
+	if(outImage == nullptr){	//check if loading the file went well
 		std::cerr << "SDL_LoadBMP failed. Reason: " << SDL_GetError() << std::endl;
 		return EXIT_FAILURE;
 	}
 
 	return EXIT_SUCCESS;
 }
+
+
 
 static int32_t init(SDL_Window*& outWindow, SDL_Surface*& outScreenSurface,
 		SDL_Surface*& outImage ){
@@ -53,12 +58,12 @@ static int32_t init(SDL_Window*& outWindow, SDL_Surface*& outScreenSurface,
 		std::cerr << "SDL_Init failed. Reason: " << SDL_GetError() << std::endl;
 	}
 
-	globalScreenSurface = SDL_GetWindowSurface(gWindow);	//make the window
-	if(nullptr == globalScreenSurface){		//check if the window was correctly instanced
+	outScreenSurface = SDL_GetWindowSurface(outWindow);	//make the window
+	if(nullptr == outScreenSurface){		//check if the window was correctly instanced
 		std::cerr << "SDL_GetWindowSurface() failed. Reason: " << SDL_GetError() << std::endl;
 	}
 
-	if (EXIT_SUCCESS != loadResources()){	//load the resources in the window
+	if (EXIT_SUCCESS != loadResources(outImage)){	//load the resources in the window
 			std::cerr << "loadResources() failed. Reason: " << SDL_GetError() << std::endl;
 			return EXIT_FAILURE;
 	}
@@ -79,6 +84,8 @@ static void deinit(SDL_Window*& outWindow, SDL_Surface*& outImage){	//deinit
 
 }
 
+
+
 static int32_t runAplication(){
 	SDL_Window* window = nullptr;
 	SDL_Surface* screenSurface = nullptr;
@@ -89,13 +96,15 @@ static int32_t runAplication(){
 			return EXIT_FAILURE;
 		}
 
-		draw();
+		draw(window, screenSurface, image);
 
-		deinit(image);
+		deinit(window, image);
 
 		return EXIT_SUCCESS;
 
 }
+
+
 
 int32_t main ([[maybe_unused]]int32_t argc, [[maybe_unused]]char* argv[])
 {
