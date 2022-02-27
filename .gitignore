@@ -1,8 +1,8 @@
 build
 .project
 .cproject
-hello_world
 .settings
+.autotools
 CMakeFiles
 CMakeCache.txt
 cmake_install.cmake

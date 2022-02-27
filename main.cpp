@@ -7,9 +7,7 @@
 #include <SDL.h>
 //#include <SDL2/SDL.h>
 
-SDL_Window* gWindow = nullptr;
-SDL_Surface* globalScreenSurface = nullptr;
-SDL_Surface* globalImage = nullptr;
+
 
 static void draw()
 {
@@ -21,7 +19,7 @@ static void draw()
 	SDL_Delay(5000);
 }
 
-static int32_t loadResources(){
+static int32_t loadResources(SDL_Surface*& outImage){
 	const std::string filePath = "../resources/hello.bmp";	//get the path to the file we need
 
 	globalImage = SDL_LoadBMP(filePath.c_str()); //load the file with the path
@@ -34,7 +32,9 @@ static int32_t loadResources(){
 	return EXIT_SUCCESS;
 }
 
-static int32_t init(){
+static int32_t init(SDL_Window*& outWindow, SDL_Surface*& outScreenSurface,
+		SDL_Surface*& outImage ){
+
 	if(EXIT_SUCCESS != SDL_Init(SDL_INIT_VIDEO)){
 		std::cerr << "SDL_Init failed. Reason: " << SDL_GetError() << std::endl;
 		return EXIT_FAILURE;
@@ -46,10 +46,10 @@ static int32_t init(){
 	const int32_t windowY = SDL_WINDOWPOS_UNDEFINED;
 	const int32_t windowWidth = 640;
 	const int32_t windowHeight = 480;
-	gWindow = SDL_CreateWindow(windowName.c_str(), windowX,
+	outWindow = SDL_CreateWindow(windowName.c_str(), windowX,
 					windowY, windowWidth, windowHeight, SDL_WINDOW_SHOWN);
 
-	if(nullptr==gWindow){	//check if gWindow was correctly instanced
+	if(nullptr==outWindow){	//check if gWindow was correctly instanced
 		std::cerr << "SDL_Init failed. Reason: " << SDL_GetError() << std::endl;
 	}
 
@@ -67,25 +67,31 @@ static int32_t init(){
 }
 
 
-static void deinit(){	//deinit
-	SDL_FreeSurface(globalImage);
-	if(gWindow != nullptr){	//shouldn't destroy a nullpointer
-		SDL_DestroyWindow(gWindow);
-		gWindow = nullptr;
+static void deinit(SDL_Window*& outWindow, SDL_Surface*& outImage){	//deinit
+	SDL_FreeSurface(outImage);
+	outImage = nullptr;
+
+	if(outWindow != nullptr){	//shouldn't destroy a nullpointer
+		SDL_DestroyWindow(outWindow);
+		outWindow = nullptr;
 	}
 
 
 }
 
 static int32_t runAplication(){
-	if(EXIT_SUCCESS != init()){
+	SDL_Window* window = nullptr;
+	SDL_Surface* screenSurface = nullptr;
+	SDL_Surface* image = nullptr;
+
+	if(EXIT_SUCCESS != init(window, screenSurface, image)){
 			std::cerr << "init() failed" << std::endl;
 			return EXIT_FAILURE;
 		}
 
 		draw();
 
-		deinit();
+		deinit(image);
 
 		return EXIT_SUCCESS;
 
