@@ -7,7 +7,7 @@
 #include <SDL.h>
 //#include <SDL2/SDL.h>
 
-
+#include "sdl_utils/SDLLoader.h"
 
 static void draw(SDL_Window* window, SDL_Surface* screenSurface,
 		SDL_Surface* image)
@@ -108,9 +108,10 @@ static int32_t runAplication(){
 
 int32_t main ([[maybe_unused]]int32_t argc, [[maybe_unused]]char* argv[])
 {
-	if(EXIT_SUCCESS != SDL_Init(SDL_INIT_VIDEO))
+
+	if(EXIT_SUCCESS != SDLLoader::init())
 	{
-		std::cerr << "SDL_Init failed. Reason:" << SDL_GetError() << std::endl;
+		std::cerr << "init() failed. " << std::endl;
 		return EXIT_FAILURE;
 	}
 

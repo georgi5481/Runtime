@@ -24,7 +24,13 @@ endif()
 
 set(_BASE_DIR ${CMAKE_CURRENT_SOURCE_DIR})	#set a variable name
 
-add_executable(${PROJECT_NAME} ${_BASE_DIR}/main.cpp)
+add_executable(
+	${PROJECT_NAME} 
+	${_BASE_DIR}/sdl_utils/SDLLoader.h
+	${_BASE_DIR}/sdl_utils/SDLLoader.cpp
+	${_BASE_DIR}/main.cpp
+	
+	)
 
 set_target_cpp_standard( ${PROJECT_NAME} 17)
 enable_target_warnings(${PROJECT_NAME})
