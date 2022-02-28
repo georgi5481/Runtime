@@ -8,9 +8,10 @@
 #include<iostream>
 
 //3rd-party includes
-#include<SDL.h>
-#include<SDL_ttf.h>
-#include<SDL_image.h>
+#include <SDL.h>
+#include <SDL_ttf.h>
+#include <SDL_image.h>
+#include <SDL_mixer.h>
 
 //Own includes
 #include "sdl_utils/SDLLoader.h"
@@ -35,12 +36,21 @@ int32_t SDLLoader::init(){
 		return EXIT_FAILURE;
 	}
 
+	if(0 > Mix_OpenAudio(44100,//sound frequency
+			MIX_DEFAULT_FORMAT,//sample format
+			2,					//stereo hardware channels
+			2048)){				//chunk size
+		std::cerr << "SDL_mixer could not be initialised! SDL Error: " <<
+				Mix_GetError() << std::endl;
+		return EXIT_FAILURE;
+	}
 
 	return EXIT_SUCCESS;
 }
 void SDLLoader::deinit(){
-
-	TTF_Quit;
+	IMG_Quit();
+	TTF_Quit();
+	Mix_Quit();
 	SDL_Quit();
 
 }
