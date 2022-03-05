@@ -14,14 +14,16 @@
 
 struct Point {
 	Point() = default;
-	Point(int32_t x, int32_t y);
+	Point(int32_t inputX, int32_t inputY);
 
 	int32_t x = 0;
 	int32_t y = 0;
 
-extern const Point ZERO;
-extern const Point UNDEFINED;
 
 };
+
+
+extern const Point ZERO;
+extern const Point UNDEFINED;
 
 #endif /* UTILS_DRAWINGS_POINT_H_ */
