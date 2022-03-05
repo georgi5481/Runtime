@@ -12,10 +12,23 @@
 
 //Forward Declaration
 
-class Rectangle {
-public:
-	Rectangle();
-	virtual ~Rectangle();
+
+struct Rectangle {
+	Rectangle() = default;
+	Rectangle(int32_t inputX, int32_t inputY,
+				int32_t inputHeight, int32_t inputWidth);
+
+
+	int32_t x = 0;
+	int32_t y = 0;
+	int32_t w = 0;
+	int32_t h = 0;
+
 };
+
+
+extern const Rectangle ZERO;
+extern const Rectangle UNDEFINED;
+
 
 #endif /* UTILS_DRAWINGS_RECTANGLE_H_ */

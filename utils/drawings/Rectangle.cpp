@@ -1,18 +1,20 @@
-/*
- * Rectangle.cpp
- *
- *  Created on: Mar 4, 2022
- *      Author: georgi
- */
-
+//Corresponding header
 #include "Rectangle.h"
 
-Rectangle::Rectangle() {
-	// TODO Auto-generated constructor stub
+//C system includes
 
+//C++ system includes
+#include<cstdint>
+
+//3rd-party includes
+
+//Own includes
+
+//Forward Declaration
+
+const Rectangle ZERO(0,0,0,0);
+const Rectangle UNDEFINED(10000,10000,10000,10000);
+
+Rectangle::Rectangle(int32_t inputX, int32_t inputY, int32_t inputHeight,int32_t inputWidth)
+										: x(inputX), y(inputY), h(inputHeight), w(inputWidth){
 }
-
-Rectangle::~Rectangle() {
-	// TODO Auto-generated destructor stub
-}
-
