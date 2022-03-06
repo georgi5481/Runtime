@@ -8,13 +8,11 @@
 #include "sdl_utils/MonitorWindow.h"
 #include "sdl_utils/SDLLoader.h"
 
-static void draw(SDL_Window* window, SDL_Surface* screenSurface,
-		SDL_Surface* image)
+static void draw(MonitorWindow& window,	SDL_Surface* image)
 {
+	SDL_Surface* screenSurface = window.getWindowSurface();
 	SDL_BlitSurface(image, nullptr, screenSurface, nullptr);
-	if(EXIT_SUCCESS != SDL_UpdateWindowSurface(window)){
-		std::cerr << "SDL_UpdateWindowSurface failed. Reason: " << SDL_GetError() << std::endl;
-	}
+	window.updateWindowSurface();
 
 	SDL_Delay(5000);
 }
@@ -36,21 +34,23 @@ static int32_t loadResources(SDL_Surface*& outImage){
 
 
 
-static int32_t init(SDL_Window*& outWindow, SDL_Surface*& outScreenSurface,
-		SDL_Surface*& outImage ){
+static int32_t init(MonitorWindow& window,	SDL_Surface*& outImage ){
 
-	if(EXIT_SUCCESS != SDL_Init(SDL_INIT_VIDEO)){
-		std::cerr << "SDL_Init failed. Reason: " << SDL_GetError() << std::endl;
-		return EXIT_FAILURE;
-	}
+	MonitorWindowCfg cfg;
 
 	//using SDL_WINDOW_SHOWN as flag
-	const std::string windowName = "Hello, World!";
-	const int32_t windowX = SDL_WINDOWPOS_UNDEFINED;
-	const int32_t windowY = SDL_WINDOWPOS_UNDEFINED;
-	const int32_t windowWidth = 640;
-	const int32_t windowHeight = 480;
-	const WindowFlags flags = WINDOW_SHOWN;
+	cfg.windowName = "Hello, World!";
+	cfg.windowPosition.x = SDL_WINDOWPOS_UNDEFINED;
+	cfg.windowPosition.y = SDL_WINDOWPOS_UNDEFINED;
+	cfg.windowWidth = 640;
+	cfg.windowHeight = 480;
+	cfg.windowFlags = WINDOW_SHOWN;
+
+
+	if (EXIT_SUCCESS != window.init(cfg)){	//load the resources in the window
+			std::cerr << "loadResources() failed. Reason: " << SDL_GetError() << std::endl;
+			return EXIT_FAILURE;
+	}
 
 	if (EXIT_SUCCESS != loadResources(outImage)){	//load the resources in the window
 			std::cerr << "loadResources() failed. Reason: " << SDL_GetError() << std::endl;
@@ -61,36 +61,29 @@ static int32_t init(SDL_Window*& outWindow, SDL_Surface*& outScreenSurface,
 }
 
 
-static void deinit(SDL_Window*& outWindow, SDL_Surface*& outImage){	//deinit
+static void deinit(MonitorWindow& window, SDL_Surface*& outImage){	//deinit
 	SDL_FreeSurface(outImage);
 	outImage = nullptr;
 
-	if(outWindow != nullptr){	//shouldn't destroy a nullpointer
-		SDL_DestroyWindow(outWindow);
-		outWindow = nullptr;
-	}
-
-
+	window.deinit();
 }
 
 
 
 static int32_t runAplication(){
-	SDL_Window* window = nullptr;
-	SDL_Surface* screenSurface = nullptr;
+	MonitorWindow window;
 	SDL_Surface* image = nullptr;
 
-	if(EXIT_SUCCESS != init(window, screenSurface, image)){
+	if(EXIT_SUCCESS != init(window, image)){
 			std::cerr << "init() failed" << std::endl;
 			return EXIT_FAILURE;
 		}
 
-		draw(window, screenSurface, image);
+		draw(window, image);
 
 		deinit(window, image);
 
 		return EXIT_SUCCESS;
-
 }
 
 

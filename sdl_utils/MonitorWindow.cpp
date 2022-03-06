@@ -31,14 +31,29 @@ int32_t MonitorWindow::init(const MonitorWindowCfg& cfg){
 }
 
 
+MonitorWindow::~MonitorWindow(){
+	deinit();
+}
+
 void MonitorWindow::deinit(){
+	if(_window != nullptr){	//shouldn't destroy a nullpointer
+			SDL_DestroyWindow(_window);
+			_window = nullptr;
+		}
+}
+
+void MonitorWindow::updateWindowSurface(){
+	if(EXIT_SUCCESS != SDL_UpdateWindowSurface(_window)){
+		std::cerr << "SDL_UpdateWindowSurface failed. Reason: " << SDL_GetError() << std::endl;
+	}
 
 }
 
-SDL_Surface* getWindowSurface(){
+SDL_Surface* MonitorWindow::getWindowSurface(){
 	SDL_Surface* screenSurface = SDL_GetWindowSurface(_window);	//make the window
 		if(nullptr == screenSurface){		//check if the window was correctly instanced
 			std::cerr << "SDL_GetWindowSurface() failed. Reason: " << SDL_GetError() << std::endl;
+			return nullptr;
 		}
-
+		return screenSurface;
 }
