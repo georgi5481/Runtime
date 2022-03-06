@@ -23,11 +23,13 @@ struct Rectangle {
 	int32_t h = 0;
 	int32_t w = 0;
 
+
+	static const Rectangle ZERO;
+	static const Rectangle UNDEFINED;
+
 };
 
 
-extern const Rectangle ZERO;
-extern const Rectangle UNDEFINED;
 
 
 #endif /* UTILS_DRAWINGS_RECTANGLE_H_ */

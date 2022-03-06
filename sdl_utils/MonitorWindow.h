@@ -7,6 +7,7 @@
 
 //Own includes
 #include "utils/drawings/Rectangle.h"
+#include "utils/drawings/Point.h"
 
 //Forward Declaration
 
@@ -14,14 +15,18 @@
 #define SDL_UTILS_MONITORWINDOW_H_
 
 struct SDL_Window;
+struct SDL_Surface;	//declaring these just so we can create void pointers to a struct/class
+
+enum WindowFlags{
+	WINDOW_SHOWN = 4;
+};
 
 struct MonitorWindowCfg{
 	 std::string windowName;
-	 int32_t windowX;
-	 int32_t windowY;
-	 int32_t windowWidth;
-	 int32_t windowHeight;
-	 uint32_t windowFlags;
+	 Point windowPosition = Point::UNDEFINED;
+	 int32_t windowWidth = 0;
+	 int32_t windowHeight = 0;
+	 WindowFlags windowFlags = 0;
 };
 
 class MonitorWindow {
@@ -40,6 +45,8 @@ public:
 
 	int32_t init(const MonitorWindowCfg& cfg);
 	void deinit();
+
+	SDL_Surface* getWindowSurface();//remove this later on
 
 private:
 	SDL_Window* _window = nullptr;

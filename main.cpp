@@ -5,8 +5,7 @@
 //3rd-party includes
 
 #include <SDL.h>
-//#include <SDL2/SDL.h>
-
+#include "sdl_utils/MonitorWindow.h"
 #include "sdl_utils/SDLLoader.h"
 
 static void draw(SDL_Window* window, SDL_Surface* screenSurface,
@@ -51,17 +50,7 @@ static int32_t init(SDL_Window*& outWindow, SDL_Surface*& outScreenSurface,
 	const int32_t windowY = SDL_WINDOWPOS_UNDEFINED;
 	const int32_t windowWidth = 640;
 	const int32_t windowHeight = 480;
-	outWindow = SDL_CreateWindow(windowName.c_str(), windowX,
-					windowY, windowWidth, windowHeight, SDL_WINDOW_SHOWN);
-
-	if(nullptr==outWindow){	//check if gWindow was correctly instanced
-		std::cerr << "SDL_Init failed. Reason: " << SDL_GetError() << std::endl;
-	}
-
-	outScreenSurface = SDL_GetWindowSurface(outWindow);	//make the window
-	if(nullptr == outScreenSurface){		//check if the window was correctly instanced
-		std::cerr << "SDL_GetWindowSurface() failed. Reason: " << SDL_GetError() << std::endl;
-	}
+	const WindowFlags flags = WINDOW_SHOWN;
 
 	if (EXIT_SUCCESS != loadResources(outImage)){	//load the resources in the window
 			std::cerr << "loadResources() failed. Reason: " << SDL_GetError() << std::endl;

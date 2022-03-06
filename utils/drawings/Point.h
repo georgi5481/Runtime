@@ -19,10 +19,12 @@ struct Point {
 	int32_t x = 0;
 	int32_t y = 0;
 
+	static const Point ZERO;
+	static const Point UNDEFINED;
+
 };
 
 
-extern const Point ZERO;
-extern const Point UNDEFINED;
+
 
 #endif /* UTILS_DRAWINGS_POINT_H_ */

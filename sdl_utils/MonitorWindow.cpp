@@ -7,8 +7,10 @@
 
 //C++ system includes
 #include<cstdint>
+#include<iostream>
 
 //3rd-party includes
+#include<SDL_video.h>
 
 //Own includes
 
@@ -16,10 +18,27 @@
 
 int32_t MonitorWindow::init(const MonitorWindowCfg& cfg){
 
+	_window = SDL_CreateWindow(cfg.windowName.c_str(), cfg.windowPosition.x,
+					cfg.windowPosition.y , cfg.windowWidth , cfg.windowHeight , cfg.windowFlags);
+
+	if(nullptr==_window){	//check if gWindow was correctly instanced
+		std::cerr << "SDL_Init failed. Reason: " << SDL_GetError() << std::endl;
+	}
+
+
+
 	return EXIT_SUCCESS;
 }
 
 
 void MonitorWindow::deinit(){
+
+}
+
+SDL_Surface* getWindowSurface(){
+	SDL_Surface* screenSurface = SDL_GetWindowSurface(_window);	//make the window
+		if(nullptr == screenSurface){		//check if the window was correctly instanced
+			std::cerr << "SDL_GetWindowSurface() failed. Reason: " << SDL_GetError() << std::endl;
+		}
 
 }
