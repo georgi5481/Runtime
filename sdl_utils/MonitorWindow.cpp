@@ -16,6 +16,7 @@
 
 int32_t MonitorWindow::init(const MonitorWindowCfg& cfg){
 
+	return EXIT_SUCCESS;
 }
 
 

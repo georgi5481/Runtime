@@ -30,11 +30,14 @@ add_executable(
 	${_BASE_DIR}/utils/drawings/Point.cpp
 	${_BASE_DIR}/utils/drawings/Rectangle.h
 	${_BASE_DIR}/utils/drawings/Rectangle.cpp
-	
+
 	
 	${_BASE_DIR}/main.cpp
 	${_BASE_DIR}/sdl_utils/SDLLoader.h
 	${_BASE_DIR}/sdl_utils/SDLLoader.cpp 
+	${_BASE_DIR}/sdl_utils/MonitorWindow.cpp
+	${_BASE_DIR}/sdl_utils/MonitorWindow.h
+	
 	)
 
 set_target_cpp_standard( ${PROJECT_NAME} 17)
