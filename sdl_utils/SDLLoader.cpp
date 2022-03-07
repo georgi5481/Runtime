@@ -52,5 +52,4 @@ void SDLLoader::deinit(){
 	TTF_Quit();
 	Mix_Quit();
 	SDL_Quit();
-
 }

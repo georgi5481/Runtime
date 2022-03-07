@@ -9,6 +9,7 @@
 //3rd-party includes
 
 //Own includes
+#include"Point.h"
 
 //Forward Declaration
 
@@ -23,6 +24,9 @@ struct Rectangle {
 	int32_t h = 0;
 	int32_t w = 0;
 
+	bool operator==(const Rectangle& other) const;
+	bool operator!=(const Rectangle& other) const;
+	bool isPointInside(const Point& point) const;
 
 	static const Rectangle ZERO;
 	static const Rectangle UNDEFINED;

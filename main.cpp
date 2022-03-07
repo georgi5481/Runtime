@@ -5,6 +5,9 @@
 //3rd-party includes
 
 #include <SDL.h>
+#include <SDL_image.h>
+
+//own include
 #include "sdl_utils/MonitorWindow.h"
 #include "sdl_utils/SDLLoader.h"
 
@@ -20,9 +23,9 @@ static void draw(MonitorWindow& window,	SDL_Surface* image)
 
 
 static int32_t loadResources(SDL_Surface*& outImage){
-	const std::string filePath = "../resources/hello.bmp";	//get the path to the file we need
+	const std::string filePath = "../resources/hello.png";	//get the path to the file we need
 
-	outImage = SDL_LoadBMP(filePath.c_str()); //load the file with the path
+	outImage = IMG_Load(filePath.c_str()); //load the file with the path
 
 	if(outImage == nullptr){	//check if loading the file went well
 		std::cerr << "SDL_LoadBMP failed. Reason: " << SDL_GetError() << std::endl;

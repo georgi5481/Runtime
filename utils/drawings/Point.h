@@ -19,6 +19,9 @@ struct Point {
 	int32_t x = 0;
 	int32_t y = 0;
 
+	bool operator==(const Point& other) const;
+	bool operator!=(const Point& other) const;
+
 	static const Point ZERO;
 	static const Point UNDEFINED;
 
