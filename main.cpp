@@ -43,7 +43,7 @@ static int32_t init(MonitorWindow& window,	SDL_Surface*& outImage ){
 	cfg.windowName = "SDL_Runtime";
 	cfg.windowWidth = 640;
 	cfg.windowHeight = 480;
-	cfg.windowFlags = WINDOW_FULLSCREEN;
+	cfg.windowFlags = WINDOW_SHOWN;
 
 
 	if (EXIT_SUCCESS != window.init(cfg)){	//load the resources in the window
