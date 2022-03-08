@@ -5,11 +5,11 @@
 //3rd-party includes
 
 #include <SDL.h>
-#include <SDL_image.h>
 
 //own include
 #include "sdl_utils/MonitorWindow.h"
 #include "sdl_utils/SDLLoader.h"
+#include "sdl_utils/Texture.h"
 
 static void draw(MonitorWindow& window,	SDL_Surface* image)
 {
@@ -25,11 +25,9 @@ static void draw(MonitorWindow& window,	SDL_Surface* image)
 static int32_t loadResources(SDL_Surface*& outImage){
 	const std::string filePath = "../resources/hello.png";	//get the path to the file we need
 
-	outImage = IMG_Load(filePath.c_str()); //load the file with the path
-
-	if(outImage == nullptr){	//check if loading the file went well
-		std::cerr << "SDL_LoadBMP failed. Reason: " << SDL_GetError() << std::endl;
-		return EXIT_FAILURE;
+	if(EXIT_SUCCESS != Texture::createSurfaceFromFile(filePath, outImage)){
+		std::cerr << "createSurfaceFromFile failer for file : " << filePath << std::endl;
+	return EXIT_FAILURE;
 	}
 
 	return EXIT_SUCCESS;
@@ -63,8 +61,7 @@ static int32_t init(MonitorWindow& window,	SDL_Surface*& outImage ){
 
 
 static void deinit(MonitorWindow& window, SDL_Surface*& outImage){	//deinit
-	SDL_FreeSurface(outImage);
-	outImage = nullptr;
+	Texture::freeSurface(outImage);
 
 	window.deinit();
 }
